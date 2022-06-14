@@ -4,8 +4,10 @@ import re
 from rest_framework.exceptions import Throttled
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework import viewsets, generics, status, permissions, views
-from rest_framework.decorators import action
+from rest_framework.decorators import action, throttle_classes
 from rest_framework.response import Response
+
+from . import throttle
 from .models import *
 from .serializers import *
 from .paginator import BasePaginator, CustomCommentPagination
@@ -13,7 +15,7 @@ from django.http import Http404
 from django.conf import settings
 from django.db.models import F  # Suport view lesson
 from func_Handle.handle_Input import no_accent_vietnamese
-from courses.throttle import UserRegisterRateThrottle
+from courses.throttle import UserLoginRateThrottle
 
 # https://www.youtube.com/watch?v=yPl5VTB7tDk&list=PLlVHoHHccp2_kuKovosZTK_Ftu6XwgFyH&index=5&t=1277s phut 34:00
 
@@ -26,6 +28,15 @@ from courses.throttle import UserRegisterRateThrottle
 # Captcha
 import requests
 from rest_framework.decorators import api_view
+
+
+@api_view(['post'])
+@throttle_classes([UserLoginRateThrottle])
+def log_out(request):
+    content = {
+        'status': 'request was permitted'
+    }
+    return Response(content)
 
 
 @api_view(['POST'])

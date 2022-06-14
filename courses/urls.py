@@ -1,6 +1,6 @@
 from django.urls import path, include
 from rest_framework import routers
-from .views import CategoryAPIView, CoursesAPIView, LessonAPIView, UserAPIView, AuthInfoView, CommentAPIView , recaptcha
+from .views import CategoryAPIView, CoursesAPIView, LessonAPIView, UserAPIView, AuthInfoView, CommentAPIView , recaptcha , log_out
 
 routers = routers.DefaultRouter()
 routers.register('categories', CategoryAPIView, 'category')
@@ -11,5 +11,6 @@ routers.register('comment', CommentAPIView, 'comment')
 urlpatterns = [
     path('', include(routers.urls)),
     path('oauth2-info/', AuthInfoView.as_view()),
-    path('recaptcha/', recaptcha)
+    path('recaptcha/', recaptcha),
+    path('log_out/',log_out),
 ]

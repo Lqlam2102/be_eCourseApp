@@ -21,8 +21,9 @@ from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
-import oauth2_provider.views as oauth2_views
-oauth2_views.TokenView.as_view()
+# import oauth2_provider.views as oauth2_views
+# oauth2_views.TokenView.as_view()
+
 schema_view = get_schema_view(
     openapi.Info(
         title="ECousre APP API",
